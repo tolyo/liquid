@@ -1,0 +1,122 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,300;0,400;0,500;0,600;1,100&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Liquid app</title>
+    <link rel="stylesheet" href="/index.css" />
+    <meta name="description" content="" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@angular-wave/angular.ts/dist/angular-ts.umd.min.js"></script>
+    <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+    <link rel="icon" href="/assets/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/icon.png" />
+
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#fafafa" />
+    <script
+      type="module"
+      src="http://localhost:3000/browser-sync/browser-sync-client.js?v=2.27.10"
+    ></script>
+    <script type="module" src="/index.js"></script>
+  </head>
+
+  <body ng-app="test" ng-cloak ng-controller="PaymentController as $ctrl">
+    <section id="client-balances">
+        
+      <header>Current balances</header>
+      <ul>
+        <li ng-repeat="balance in $ctrl.balances">
+          {{ balance.amount | currency }} {{ balance.currency }}
+          </li>
+        </ul>
+    </section>
+    
+    <section id="payment-form">
+      <h4>Create exchange</h4>
+
+      <form ng-submit="$ctrl.submit()">
+        <label>
+          Sell
+          <input
+              type="number"
+              step="0.01"
+              ng-model="$ctrl.amountSell"
+              ng-change="$ctrl.recalculateBuyAmount()"
+            />
+
+          <select
+            ng-model="$ctrl.sellCurrency"
+            ng-change="$ctrl.selectSellCurrency()"
+          >
+            <option hidden selected value>Select currency</option>
+            <option ng-repeat="i in $ctrl.currencies" value="{{ i }}">
+              {{ i }}
+            </option>
+          </select>
+        </label>
+
+        <label>
+          Buy
+          <input
+                type="number"
+                step="0.01"
+                ng-model="$ctrl.amountBuy"
+                ng-change="$ctrl.recalculateSellAmount()"
+              />
+        
+          <select
+            ng-model="$ctrl.buyCurrency"
+            ng-change="$ctrl.recalculateBuyAmount()"
+          >
+            <option hidden selected value>Select currency</option>
+            <option
+              ng-repeat="i in $ctrl.availableCurrencies()"
+              value="{{ i }}"
+            >
+              {{ i }}
+            </option>
+          </select>
+        </label>
+
+        <div ng-if="$ctrl.buyCurrency && $ctrl.sellCurrency">
+          Selected currency pair {{ $ctrl.buyCurrency }}/{{ $ctrl.sellCurrency
+          }} {{ $ctrl.rate }}
+          
+          <section>
+            Buy: {{ $ctrl.amountBuy }} {{ $ctrl.buyCurrency }}
+          </section>
+
+          <button>Submit</button>
+        </div>
+        <section ng-if="$ctrl.error" class="error">{{ $ctrl.errorDescription }} </section>
+       
+      </form>
+    </section>
+
+    <section id="master-balances">
+      <div ng-controller="BalanceController as $ctrl">
+        <header>Master balances</header>
+        <ul>
+          <li ng-repeat="balance in $ctrl.balances">
+            {{ balance.amount | currency }} {{ balance.currency }}
+          </li>
+        </ul>
+      </div>
+
+      <div ng-controller="RateController as $ctrl">
+        <header>Rates</header>
+        <ul>
+          <li ng-repeat="(key, value) in $ctrl.rates">{{ key }} {{ value }}</li>
+        </ul>
+      </div>
+    </section>
+  </body>
+</html>

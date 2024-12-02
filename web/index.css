@@ -1,0 +1,127 @@
+@import "./node_modules/modern-normalize/modern-normalize.css";
+@import "./styles/fonts.css";
+
+html,
+body {
+  display: flex;
+  width: 100%;
+  font-family: var(--font-family);
+}
+
+li {
+  list-style-type: none;
+}
+
+[ng-cloak],
+[data-ng-cloak],
+.ng-cloak,
+.ng-hide:not(.ng-hide-animate) {
+  display: none !important;
+}
+
+.ng-animate-shim {
+  visibility: hidden;
+}
+
+.ng-anchor {
+  position: absolute;
+}
+
+#app {
+  text-align: center;
+  & section {
+    padding-top: 1rem;
+  }
+}
+
+#client-balances {
+  background-color: gainsboro;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12rem;
+  padding: 0.8rem;
+  & header {
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+  & ul {
+    padding-inline-start: 0;
+    margin-top: 0;
+    background-color: white;
+  }
+  & li {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid gainsboro;
+    padding: 0.2rem;
+    font-size: 10px;
+    line-height: 1rem;
+  }
+}
+
+#payment-form {
+  margin-left: 14rem;
+  width: 100%;
+  & form {
+    display: flex;
+    flex-direction: column;
+    width: 40rem;
+    & label {
+      width: 100%;
+      padding-bottom: 0.5rem;
+    }
+    & button {
+      margin-top: 1rem;
+      background-color: steelblue;
+      color: white;
+      border: none;
+      padding: 0.4rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+  & .error {
+    background-color: lightcoral;
+    color: white;
+    padding: 0.8rem;
+    margin-top: 1rem;
+    border-radius: 3px;
+    width: auto;
+  }
+}
+
+#master-balances {
+  background-color: gainsboro;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 12rem;
+  padding: 0.8rem;
+  & header {
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+  & ul {
+    padding-inline-start: 0;
+    margin-top: 0;
+    background-color: white;
+  }
+  & li {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid gainsboro;
+    padding: 0.2rem;
+    font-size: 10px;
+    line-height: 1rem;
+  }
+}
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 2rem;
+}

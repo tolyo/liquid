@@ -1,0 +1,26 @@
+volumes:
+  postgres-storage:
+services:
+  db:
+    container_name: liquid_db
+    image: postgres:16.1-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-storage:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - ./pkg/conf/dev.env
+    restart: unless-stopped
+
+  app:
+    container_name: liquid_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    env_file:
+      - ./pkg/conf/dev.env
+    ports:
+      - "4000:4000"
